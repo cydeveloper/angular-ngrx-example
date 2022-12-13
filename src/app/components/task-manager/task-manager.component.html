@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-12 col-md-4">
+        <h4>Add New Task</h4>
+        <form [formGroup]="form" (ngSubmit)="addTask(form.value)">
+            <input type="number" class="form-control" formControlName="id" placeholder="Task ID" required>
+            <button type="submit" class="form-control btn btn-primary">+ Add</button>
+        </form>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="row">
+            <h4>In Progress</h4>
+            <ng-container *ngFor="let task of taskData$ | async">
+                <div *ngIf="!task.complete" class="col-12 mb-3">
+                    <div class="border p-2">
+                        <h6>Task {{ task.id }}</h6>
+                        <p>Completed: {{ task.complete }}</p>
+                        <button type="button" class="btn btn-success" (click)="setToComplete(task.id)">Set to Complete</button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="row">
+            <h4>Completed</h4>
+            <ng-container *ngFor="let task of taskData$ | async">
+                <div *ngIf="task.complete" class="col-12 mb-3">
+                    <div class="border p-2">
+                        <h6>Task {{ task.id }}</h6>
+                        <p>Completed: {{ task.complete }}</p>
+                        <button type="button" class="btn btn-danger" (click)="deleteTask(task.id)">Delete</button>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
